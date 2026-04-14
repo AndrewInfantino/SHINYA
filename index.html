@@ -1,0 +1,2203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SHINYA — Saint-Sauveur, Québec</title>
+  <meta name="description" content="SHINYA — Bar à sushi gastronomique à Saint-Sauveur, Québec. L'art du sushi. La nuit vous appartient." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0D0C0B;
+      --surface: #161412;
+      --surface2: #1C1917;
+      --gold: #C9A96E;
+      --gold-dim: rgba(201,169,110,0.15);
+      --gold-dim2: rgba(201,169,110,0.08);
+      --cream: #F0EBE1;
+      --muted: #7A7570;
+      --border: #2A2522;
+      --red: #8B1A1A;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* ─── NOISE TEXTURE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ─── TYPOGRAPHY ─── */
+    h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; line-height: 1.2; }
+    h1 { font-size: clamp(2.8rem, 7vw, 5.5rem); letter-spacing: -0.01em; }
+    h2 { font-size: clamp(2rem, 4vw, 3rem); }
+    h3 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
+    p { font-size: clamp(0.9rem, 1.5vw, 1rem); color: var(--muted); }
+    .label {
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      background: transparent;
+      transition: background 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+      z-index: -1;
+    }
+    .btn:hover { color: var(--bg); box-shadow: 0 0 25px rgba(201,169,110,0.25); }
+    .btn:hover::before { transform: scaleX(1); }
+    .btn-solid { background: var(--gold); color: var(--bg); }
+    .btn-solid::before { background: var(--cream); }
+    .btn-solid:hover { color: var(--bg); }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 1.2rem auto;
+      opacity: 0.6;
+    }
+    .divider-left { margin-left: 0; }
+
+    /* ─── SECTION WRAPPER ─── */
+    .section { padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 6vw, 6rem); }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-header { margin-bottom: 3.5rem; }
+    .section-header.center { text-align: center; }
+    .section-header.center .divider { margin: 1.2rem auto; }
+
+    /* ─── FADE-IN ANIMATION ─── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .fade-in-delay-1 { transition-delay: 0.1s; }
+    .fade-in-delay-2 { transition-delay: 0.2s; }
+    .fade-in-delay-3 { transition-delay: 0.3s; }
+    .fade-in-delay-4 { transition-delay: 0.4s; }
+
+    /* ══════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 1.4rem clamp(1.5rem, 6vw, 6rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s ease, padding 0.4s ease, border-bottom 0.4s ease;
+      border-bottom: 1px solid transparent;
+    }
+    #navbar.scrolled {
+      background: rgba(13,12,11,0.96);
+      backdrop-filter: blur(12px);
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      border-bottom-color: var(--border);
+    }
+
+    .nav-logo a {
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+    .nav-logo .logo-main {
+      font-family: var(--serif);
+      font-size: 1.45rem;
+      letter-spacing: 0.3em;
+      color: var(--cream);
+      font-weight: 400;
+    }
+    .nav-logo .logo-kanji {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.3s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--cream); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+    }
+
+    .lang-toggle {
+      display: flex;
+      gap: 0.3rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+    }
+    .lang-toggle button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.4rem;
+      transition: color 0.3s;
+    }
+    .lang-toggle button.active { color: var(--gold); }
+    .lang-toggle .sep { color: var(--border); display: flex; align-items: center; }
+
+    /* HAMBURGER */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1px;
+      background: var(--cream);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* MOBILE OVERLAY */
+    #mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(13,12,11,0.98);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    #mobile-menu.open { display: flex; }
+    #mobile-menu a {
+      text-decoration: none;
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--cream);
+      transition: color 0.3s;
+    }
+    #mobile-menu a:hover { color: var(--gold); }
+    #mobile-menu .mobile-lang {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    #mobile-menu .mobile-lang button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    #mobile-menu .mobile-lang button.active { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      .nav-links, .nav-right .btn { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ══════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════ */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 70%, rgba(201,169,110,0.06) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(139,26,26,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(201,169,110,0.04) 0%, transparent 70%),
+        linear-gradient(180deg, #0D0C0B 0%, #100F0D 40%, #0A0908 100%);
+    }
+
+    /* Decorative lines */
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(90deg, transparent 49.9%, rgba(201,169,110,0.04) 50%, transparent 50.1%),
+        linear-gradient(0deg, transparent 49.9%, rgba(201,169,110,0.03) 50%, transparent 50.1%);
+      background-size: 120px 120px;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 35%;
+      background: linear-gradient(to top, var(--bg), transparent);
+    }
+
+    /* Large decorative kanji */
+    .hero-kanji {
+      position: absolute;
+      font-family: var(--serif);
+      font-size: clamp(18rem, 40vw, 34rem);
+      color: rgba(201,169,110,0.025);
+      line-height: 1;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -0.05em;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+      padding: 0 2rem;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.3s forwards;
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(3rem, 8vw, 6rem);
+      color: var(--cream);
+      line-height: 1.08;
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.5s forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+
+    .hero-subtitle {
+      font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 2.8rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.7s forwards;
+    }
+
+    .hero-cta {
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.9s forwards;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.2s forwards;
+    }
+    .hero-scroll span {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollDrop 2s ease-in-out infinite;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(20px); }
+    }
+    @keyframes scrollDrop {
+      0%, 100% { transform: scaleY(1); transform-origin: top; }
+      50% { transform: scaleY(0.5); transform-origin: top; }
+    }
+
+    /* ══════════════════════════════════════════
+       EXPERIENCE
+    ══════════════════════════════════════════ */
+    #experience {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .experience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .experience-card {
+      padding: 3.5rem 2.5rem;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+    .experience-card:last-child { border-right: none; }
+
+    .experience-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1.8rem;
+      opacity: 0.7;
+    }
+
+    .experience-card h3 {
+      font-size: 1.5rem;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+
+    .experience-card p {
+      font-size: 0.92rem;
+      line-height: 1.8;
+    }
+
+    .experience-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 2.5rem;
+      width: 30px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0;
+      transition: opacity 0.3s, width 0.4s ease;
+    }
+    .experience-card:hover::after { opacity: 0.6; width: 60px; }
+
+    @media (max-width: 768px) {
+      .experience-grid { grid-template-columns: 1fr; }
+      .experience-card { border-right: none; border-bottom: 1px solid var(--border); }
+      .experience-card:last-child { border-bottom: none; }
+    }
+
+    /* ══════════════════════════════════════════
+       MENU
+    ══════════════════════════════════════════ */
+    #menu { background: var(--bg); }
+
+    .menu-tabs {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      width: fit-content;
+      margin: 0 auto 3.5rem;
+    }
+    .menu-tab {
+      background: none;
+      border: none;
+      padding: 0.9rem 2.5rem;
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+    .menu-tab.active {
+      color: var(--bg);
+      background: var(--gold);
+    }
+
+    .menu-panel { display: none; }
+    .menu-panel.active { display: block; }
+
+    .menu-category {
+      margin-bottom: 3.5rem;
+    }
+    .menu-category-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.8rem;
+    }
+    .menu-category-header h3 {
+      font-size: 1.1rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-family: var(--sans);
+      font-weight: 500;
+    }
+    .menu-category-header::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .menu-items {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+    .menu-item {
+      background: var(--surface);
+      padding: 1.5rem 1.8rem;
+      transition: background 0.3s;
+    }
+    .menu-item:hover { background: var(--surface2); }
+
+    .menu-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.4rem;
+      gap: 1rem;
+    }
+    .menu-item-name {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      color: var(--cream);
+      line-height: 1.3;
+    }
+    .menu-item-name small {
+      display: block;
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-style: normal;
+      letter-spacing: 0.05em;
+      margin-top: 0.2rem;
+    }
+    .menu-item-price {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      color: var(--gold);
+      white-space: nowrap;
+      padding-top: 0.2rem;
+    }
+    .menu-item p {
+      font-size: 0.82rem;
+      line-height: 1.65;
+    }
+
+    .menu-item.omakase {
+      grid-column: 1 / -1;
+      background: var(--surface2);
+      border-left: 2px solid var(--gold);
+    }
+
+    .menu-note {
+      text-align: center;
+      margin-top: 2.5rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .menu-items { grid-template-columns: 1fr; }
+    }
+
+    /* ══════════════════════════════════════════
+       CHEFS
+    ══════════════════════════════════════════ */
+    #chefs {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+
+    .chefs-grid {
+      display: grid;
+      gap: 0;
+    }
+
+    .chef-card {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .chef-card:last-child { border-bottom: none; }
+    .chef-card:nth-child(even) { direction: rtl; }
+    .chef-card:nth-child(even) > * { direction: ltr; }
+
+    .chef-visual {
+      background: var(--surface2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+      border-right: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .chef-card:nth-child(even) .chef-visual { border-right: none; border-left: 1px solid var(--border); }
+
+    .chef-avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+      position: relative;
+    }
+    .chef-avatar::before {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,169,110,0.2);
+    }
+
+    .chef-num {
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      color: var(--border);
+      text-transform: uppercase;
+    }
+
+    .chef-info {
+      padding: 3rem 3.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .chef-title-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    .chef-info h3 {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+
+    .chef-info p {
+      font-size: 0.9rem;
+      line-height: 1.85;
+      max-width: 520px;
+    }
+
+    @media (max-width: 768px) {
+      .chef-card, .chef-card:nth-child(even) { grid-template-columns: 1fr; direction: ltr; }
+      .chef-visual { border-right: none !important; border-left: none !important; border-bottom: 1px solid var(--border); padding: 2.5rem; }
+      .chef-info { padding: 2rem 1.5rem; }
+    }
+
+    /* ══════════════════════════════════════════
+       HISTOIRE
+    ══════════════════════════════════════════ */
+    #histoire {
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+    #histoire::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 70% at 80% 50%, rgba(201,169,110,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .histoire-inner {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 6rem;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .histoire-text .label { margin-bottom: 1.2rem; display: block; }
+    .histoire-text h2 { margin-bottom: 2rem; color: var(--cream); }
+
+    .histoire-text p {
+      font-size: 0.95rem;
+      line-height: 1.95;
+      margin-bottom: 1.2rem;
+    }
+
+    .histoire-quote {
+      border-left: 1px solid var(--gold);
+      padding: 1.2rem 0 1.2rem 1.8rem;
+      margin: 2.5rem 0;
+    }
+    .histoire-quote p {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.35rem;
+      color: var(--gold);
+      line-height: 1.5;
+    }
+    .histoire-quote span {
+      display: block;
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.7rem;
+    }
+
+    .histoire-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .histoire-kanji-display {
+      font-size: clamp(8rem, 15vw, 13rem);
+      color: rgba(201,169,110,0.12);
+      line-height: 1;
+      font-family: serif;
+      letter-spacing: -0.05em;
+      text-align: center;
+    }
+
+    .histoire-deco {
+      position: absolute;
+      width: 1px;
+      top: 0; bottom: 0;
+      left: 50%;
+      background: linear-gradient(to bottom, transparent, var(--border), transparent);
+    }
+
+    @media (max-width: 1024px) {
+      .histoire-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .histoire-visual { display: none; }
+    }
+
+    /* ══════════════════════════════════════════
+       RESERVATION
+    ══════════════════════════════════════════ */
+    #reservation {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+
+    .reservation-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .reservation-left h2 { color: var(--cream); margin-bottom: 1.2rem; }
+    .reservation-left p { font-size: 0.9rem; line-height: 1.85; margin-bottom: 1.5rem; }
+
+    .reservation-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .reservation-detail-icon {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--gold);
+      font-size: 0.85rem;
+    }
+    .reservation-detail-text { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+    .reservation-detail-text strong { display: block; color: var(--cream); font-weight: 400; margin-bottom: 0.1rem; }
+
+    /* Form */
+    .res-form { display: flex; flex-direction: column; gap: 0; }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      margin-bottom: 1px;
+    }
+    .form-row.full { grid-template-columns: 1fr; }
+
+    .form-field {
+      position: relative;
+      background: var(--bg);
+    }
+    .form-field label {
+      position: absolute;
+      top: 1rem;
+      left: 1.3rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: all 0.25s;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--cream);
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      padding: 2.2rem 1.3rem 0.8rem;
+      transition: background 0.3s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .form-field select option { background: var(--surface); color: var(--cream); }
+    .form-field textarea { resize: none; height: 100px; }
+    .form-field:focus-within { background: var(--surface2); outline: 1px solid var(--gold); outline-offset: -1px; }
+    .form-field:focus-within label { color: var(--gold); font-size: 0.6rem; top: 0.6rem; }
+
+    .form-submit-row {
+      margin-top: 1px;
+      background: var(--border);
+      padding: 1px;
+    }
+    .form-submit-row button {
+      width: 100%;
+      background: var(--gold);
+      color: var(--bg);
+      border: none;
+      padding: 1.2rem;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s, opacity 0.3s;
+    }
+    .form-submit-row button:hover { background: var(--cream); }
+
+    .form-note {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 1rem;
+      text-align: center;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .reservation-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ══════════════════════════════════════════
+       LOCATION
+    ══════════════════════════════════════════ */
+    #location {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+
+    .location-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: start;
+    }
+
+    .location-info h2 { color: var(--cream); margin-bottom: 2rem; }
+
+    .location-block {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .location-block:last-child { border-bottom: none; }
+    .location-block .label { display: block; margin-bottom: 0.6rem; }
+    .location-block p, .location-block a {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .location-block a { color: var(--gold); }
+    .location-block a:hover { text-decoration: underline; }
+
+    .location-hours { display: grid; gap: 0.3rem; }
+    .location-hour-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+    }
+    .location-hour-row span:first-child { color: var(--cream); }
+    .location-hour-row span:last-child { color: var(--muted); }
+
+    .location-map {
+      position: relative;
+      height: 420px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .map-placeholder {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(13,12,11,0.7), rgba(13,12,11,0.5)),
+        repeating-linear-gradient(0deg, transparent, transparent 39px, var(--border) 39px, var(--border) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, var(--border) 40px, var(--border) 41px);
+    }
+    .map-pin {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .map-pin-dot {
+      width: 14px;
+      height: 14px;
+      background: var(--gold);
+      border-radius: 50%;
+      box-shadow: 0 0 0 6px rgba(201,169,110,0.2), 0 0 0 12px rgba(201,169,110,0.08);
+      animation: pulse 2.5s ease infinite;
+    }
+    .map-pin-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: rgba(13,12,11,0.9);
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--border);
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 6px rgba(201,169,110,0.2), 0 0 0 12px rgba(201,169,110,0.08); }
+      50% { box-shadow: 0 0 0 9px rgba(201,169,110,0.12), 0 0 0 18px rgba(201,169,110,0.04); }
+    }
+
+    .location-social {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted) !important;
+      text-decoration: none;
+      transition: color 0.3s;
+      padding: 0.5rem 0.8rem;
+      border: 1px solid var(--border);
+    }
+    .social-link:hover { color: var(--gold) !important; border-color: var(--gold); }
+
+    @media (max-width: 1024px) {
+      .location-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .location-map { height: 300px; }
+    }
+
+    /* ══════════════════════════════════════════
+       CONTACT
+    ══════════════════════════════════════════ */
+    #contact {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contact-inner h2 { margin-bottom: 1rem; }
+    .contact-inner > p { font-size: 0.92rem; margin-bottom: 2.5rem; }
+
+    .contact-form { text-align: left; }
+    .contact-form .form-row { margin-bottom: 1px; }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 4rem clamp(1.5rem, 6vw, 6rem) 2.5rem;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 2rem;
+      align-items: start;
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .footer-logo {
+      display: flex;
+      flex-direction: column;
+    }
+    .footer-logo .logo-main {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      letter-spacing: 0.3em;
+      color: var(--cream);
+    }
+    .footer-logo .logo-kanji {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+    }
+    .footer-logo .footer-tagline {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 0.5rem;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      align-items: center;
+    }
+    .footer-nav a {
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.3s;
+    }
+    .footer-nav a:hover { color: var(--cream); }
+
+    .footer-right {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .footer-right p { font-size: 0.82rem; }
+    .footer-lang {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      margin-top: 0.5rem;
+    }
+    .footer-lang button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .footer-lang button.active { color: var(--gold); }
+
+    .footer-bottom {
+      text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-bottom p { font-size: 0.72rem; }
+
+    @media (max-width: 768px) {
+      .footer-top { grid-template-columns: 1fr; text-align: center; }
+      .footer-nav { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+      .footer-right { text-align: center; }
+      .footer-lang { justify-content: center; }
+    }
+
+    /* ══════════════════════════════════════════
+       UTILITY
+    ══════════════════════════════════════════ */
+    [data-lang] { }
+  </style>
+</head>
+<body>
+
+  <!-- ───────────────────── MOBILE MENU ───────────────────── -->
+  <div id="mobile-menu">
+    <a href="#menu" class="mobile-nav-link" data-lang-key="nav_menu">La Carte</a>
+    <a href="#chefs" class="mobile-nav-link" data-lang-key="nav_chefs">Nos Maîtres</a>
+    <a href="#histoire" class="mobile-nav-link" data-lang-key="nav_histoire">Notre Histoire</a>
+    <a href="#reservation" class="mobile-nav-link" data-lang-key="nav_resa">Réservation</a>
+    <a href="#contact" class="mobile-nav-link" data-lang-key="nav_contact">Contact</a>
+    <div class="mobile-lang">
+      <button onclick="setLang('fr')" class="mobile-lang-btn active" id="mobile-fr">FR</button>
+      <span style="color:var(--border)">|</span>
+      <button onclick="setLang('en')" class="mobile-lang-btn" id="mobile-en">EN</button>
+    </div>
+  </div>
+
+  <!-- ───────────────────── NAV ───────────────────── -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      <a href="#hero">
+        <span class="logo-main">SHINYA</span>
+        <span class="logo-kanji">深夜</span>
+      </a>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#menu" data-lang-key="nav_menu">La Carte</a></li>
+      <li><a href="#chefs" data-lang-key="nav_chefs">Nos Maîtres</a></li>
+      <li><a href="#histoire" data-lang-key="nav_histoire">Notre Histoire</a></li>
+      <li><a href="#reservation" data-lang-key="nav_resa">Réservation</a></li>
+      <li><a href="#contact" data-lang-key="nav_contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button onclick="setLang('fr')" class="lang-btn active" id="nav-fr">FR</button>
+        <span class="sep">|</span>
+        <button onclick="setLang('en')" class="lang-btn" id="nav-en">EN</button>
+      </div>
+      <a href="#reservation" class="btn" data-lang-key="nav_cta">Réserver</a>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ───────────────────── HERO ───────────────────── -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-kanji">夜</div>
+    <div class="hero-content">
+      <p class="hero-eyebrow" data-lang-key="hero_eyebrow">Saint-Sauveur · Québec · Depuis 2019</p>
+      <h1 class="hero-title">
+        <span data-lang-key="hero_title_1">L'art du sushi.</span><br>
+        <em data-lang-key="hero_title_2">La nuit vous appartient.</em>
+      </h1>
+      <p class="hero-subtitle" data-lang-key="hero_sub">Une expérience gastronomique où la précision japonaise rencontre l'âme sauvage des Laurentides.</p>
+      <div class="hero-cta">
+        <a href="#reservation" class="btn btn-solid" data-lang-key="hero_cta">Réserver une table</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span data-lang-key="hero_scroll">Découvrir</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ───────────────────── EXPERIENCE ───────────────────── -->
+  <section id="experience">
+    <div class="experience-grid">
+      <div class="experience-card fade-in">
+        <svg class="experience-icon" viewBox="0 0 48 48" fill="none" stroke="#C9A96E" stroke-width="1">
+          <path d="M24 4 L28 16 L40 16 L30 24 L34 36 L24 29 L14 36 L18 24 L8 16 L20 16 Z" opacity="0.5"/>
+          <circle cx="24" cy="24" r="8"/>
+          <line x1="24" y1="4" x2="24" y2="8"/>
+          <line x1="24" y1="40" x2="24" y2="44"/>
+          <line x1="4" y1="24" x2="8" y2="24"/>
+          <line x1="40" y1="24" x2="44" y2="24"/>
+        </svg>
+        <p class="label" data-lang-key="exp1_label">Le Sushi</p>
+        <h3 data-lang-key="exp1_title">L'art du geste</h3>
+        <p data-lang-key="exp1_text">Chaque nigiri est façonné à la main par nos maîtres. Le riz, assaisonné au vinaigre de riz artisanal du Québec, porte la mémoire d'un geste mille fois répété. Le poisson, sélectionné à l'aube, n'est jamais pressé — il se pose.</p>
+      </div>
+      <div class="experience-card fade-in fade-in-delay-1">
+        <svg class="experience-icon" viewBox="0 0 48 48" fill="none" stroke="#C9A96E" stroke-width="1">
+          <path d="M16 8 L16 32 Q16 40 24 40 Q32 40 32 32 L32 8"/>
+          <line x1="12" y1="16" x2="36" y2="16"/>
+          <circle cx="34" cy="10" r="3"/>
+          <path d="M34 13 L34 22" stroke-dasharray="2 2"/>
+        </svg>
+        <p class="label" data-lang-key="exp2_label">Le Bar</p>
+        <h3 data-lang-key="exp2_title">L'ivresse douce</h3>
+        <p data-lang-key="exp2_text">Notre bar à sakés rassemble plus de quarante cuvées, des junmai daiginjo de Niigata aux nihonshu produits dans les collines québécoises. Les cocktails japonais — fumés, floraux, glacés — racontent chaque saison dans un verre.</p>
+      </div>
+      <div class="experience-card fade-in fade-in-delay-2">
+        <svg class="experience-icon" viewBox="0 0 48 48" fill="none" stroke="#C9A96E" stroke-width="1">
+          <path d="M8 36 Q24 20 40 36"/>
+          <path d="M12 40 Q24 28 36 40" opacity="0.5"/>
+          <circle cx="24" cy="16" r="6"/>
+          <path d="M18 12 Q10 8 8 2"/>
+          <path d="M30 12 Q38 8 40 2" opacity="0.6"/>
+        </svg>
+        <p class="label" data-lang-key="exp3_label">L'Ambiance</p>
+        <h3 data-lang-key="exp3_title">La nuit laurentienne</h3>
+        <p data-lang-key="exp3_text">Derrière les grandes fenêtres, les pins enneigés veillent. À l'intérieur, la lumière des bougies effleure le bois sombre et la pierre. SHINYA n'est pas un restaurant — c'est le silence habité, juste avant minuit.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────── MENU ───────────────────── -->
+  <section id="menu" class="section">
+    <div class="section-inner">
+      <div class="section-header center fade-in">
+        <p class="label" data-lang-key="menu_label">La Carte</p>
+        <div class="divider"></div>
+        <h2 data-lang-key="menu_title">Ce que la nuit vous offre</h2>
+      </div>
+
+      <div class="menu-tabs fade-in">
+        <button class="menu-tab active" onclick="switchTab('cuisine')" data-lang-key="tab_cuisine">Cuisine</button>
+        <button class="menu-tab" onclick="switchTab('boissons')" data-lang-key="tab_boissons">Boissons</button>
+      </div>
+
+      <!-- CUISINE PANEL -->
+      <div id="panel-cuisine" class="menu-panel active">
+
+        <div class="menu-category fade-in">
+          <div class="menu-category-header"><h3 data-lang-key="cat_entrees">Entrées</h3></div>
+          <div class="menu-items">
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Tataki de Thon Rouge<small>赤身のたたき</small></div>
+                <div class="menu-item-price">$26</div>
+              </div>
+              <p data-lang-key="item_tataki">Thon rouge snacké à la flamme, ponzu aux agrumes du jardin, gingembre frais et huile de sésame grillé.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Edamame Truffe Noire<small>黒トリュフ枝豆</small></div>
+                <div class="menu-item-price">$18</div>
+              </div>
+              <p data-lang-key="item_edamame">Edamame de saison, beurre de truffe noire du Périgord, fleur de sel des Îles de la Madeleine.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Huîtres Shinya<small>牡蠣のしんや風</small></div>
+                <div class="menu-item-price">$32</div>
+              </div>
+              <p data-lang-key="item_huitres">Quatre huîtres des Îles, granité de yuzu, caviar de hareng des Laurentides et foam de saké Junmai.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Gyoza Canard Sauvage<small>鴨の餃子</small></div>
+                <div class="menu-item-price">$22</div>
+              </div>
+              <p data-lang-key="item_gyoza">Gyoza panpoêlés au canard sauvage des Laurentides, sauce miso blanc et herbes du terroir québécois.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Chawanmushi Homard<small>茶碗蒸しロブスター</small></div>
+                <div class="menu-item-price">$29</div>
+              </div>
+              <p data-lang-key="item_chawan">Flan vapeur japonais au dashi de homard de Gaspésie, champignons matsutake et ciboulette sauvage.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-category fade-in">
+          <div class="menu-category-header"><h3 data-lang-key="cat_nigiris">Nigiris</h3></div>
+          <div class="menu-items">
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Otoro Wagyu Flambé<small>大トロ和牛炙り</small></div>
+                <div class="menu-item-price">$28 / 2 pièces</div>
+              </div>
+              <p data-lang-key="item_otoro">Ventrèche de thon et bœuf Wagyu A5 légèrement brûlés, finition truffe et or en feuille.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Saumon Sauvage Erable<small>野生鮭・メープル</small></div>
+                <div class="menu-item-price">$19 / 2 pièces</div>
+              </div>
+              <p data-lang-key="item_saumon">Saumon sauvage du Pacifique, laque à l'érable pur du Québec, grain de poivre Sichuan.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Oursin · Sea Urchin<small>雲丹</small></div>
+                <div class="menu-item-price">$24 / 2 pièces</div>
+              </div>
+              <p data-lang-key="item_uni">Uni de Santa Barbara posé sur riz chaud, nori grillé, ciboulette et quelques grains de fleur de sel.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Flétan du Nord<small>ひらめ</small></div>
+                <div class="menu-item-price">$17 / 2 pièces</div>
+              </div>
+              <p data-lang-key="item_fletan">Flétan de l'Atlantique mariné au kombu, yuzu kosho maison, fines herbes des sous-bois laurentiens.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Ikura Boréale<small>いくら</small></div>
+                <div class="menu-item-price">$21 / 2 pièces</div>
+              </div>
+              <p data-lang-key="item_ikura">Œufs de saumon marinés au shoyu artisanal, ponzu au citron de Menton, gel de shiso frais.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-category fade-in">
+          <div class="menu-category-header"><h3 data-lang-key="cat_makis">Makis Signatures</h3></div>
+          <div class="menu-items">
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Le Laurentien<small>ローレンシャン巻き</small></div>
+                <div class="menu-item-price">$36</div>
+              </div>
+              <p data-lang-key="item_laurentien">Canard fumé, fromage de chèvre des Laurentides, betterave lacto-fermentée, sauce hoisin au sirop d'érable. 8 pièces.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Le Noir Absolu<small>黒巻き</small></div>
+                <div class="menu-item-price">$42</div>
+              </div>
+              <p data-lang-key="item_noir">Homard braisé, avocat, caviar d'esturgeon, nori noir activé, sauce truffe. 8 pièces.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Shinya Spécial<small>深夜スペシャル</small></div>
+                <div class="menu-item-price">$38</div>
+              </div>
+              <p data-lang-key="item_special">Thon rouge, mangue des Antilles, jalapeño, coriandre, sauce épicée yuzu mayo. 8 pièces.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Végétal des Bois<small>森の野菜巻き</small></div>
+                <div class="menu-item-price">$28</div>
+              </div>
+              <p data-lang-key="item_vegetal">Champignons shiitake grillés, concombre anglais, avocat, radis daikon, vinaigrette sésame noir. 8 pièces.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-category fade-in">
+          <div class="menu-category-header"><h3 data-lang-key="cat_omakase">Omakase</h3></div>
+          <div class="menu-items">
+            <div class="menu-item omakase">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Expérience Omakase · Chef's Journey<small>おまかせ体験</small></div>
+                <div class="menu-item-price" data-lang-key="omakase_price">Sur demande</div>
+              </div>
+              <p data-lang-key="omakase_desc">Une expérience en seize services conçue chaque soir par le Chef Kenji Yamamoto. Les ingrédients varient selon les arrivages et la saison. Vous vous abandonnez — le chef crée. Réservation requise au moins 48h à l'avance. Places limitées à huit convives au comptoir sushi.</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="menu-note" data-lang-key="menu_note">Notre menu évolue selon les saisons et les arrivages · Prix en dollars canadiens, taxes en sus</p>
+      </div><!-- /cuisine -->
+
+      <!-- BOISSONS PANEL -->
+      <div id="panel-boissons" class="menu-panel">
+
+        <div class="menu-category fade-in">
+          <div class="menu-category-header"><h3 data-lang-key="cat_sake">Sakés</h3></div>
+          <div class="menu-items">
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Dassai 45 Junmai Daiginjo<small>獺祭 純米大吟醸</small></div>
+                <div class="menu-item-price">$24 / verre</div>
+              </div>
+              <p data-lang-key="sake1">Niigata, Japon. Notes de melon frais, pêche blanche et fleur de cerisier. Doux, long, impeccable.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Boréal Junmai — Québec<small>ケベック純米</small></div>
+                <div class="menu-item-price">$18 / verre</div>
+              </div>
+              <p data-lang-key="sake2">Brassé au Québec avec l'eau des Laurentides. Terroiré, légèrement umami, finale minérale distinctive.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Kubota Manju Tokubetsu<small>久保田 万寿</small></div>
+                <div class="menu-item-price">$32 / verre</div>
+              </div>
+              <p data-lang-key="sake3">Exceptionnel. Yamada Nishiki poli à 33%. Opulent, cristallin. Réservé aux grandes occasions.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Nigori Crémeux Saisonnier<small>にごり酒</small></div>
+                <div class="menu-item-price">$16 / verre</div>
+              </div>
+              <p data-lang-key="sake4">Non filtré, crémeux, légèrement pétillant. Selon la saison — changeant comme la lumière à Saint-Sauveur.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-category fade-in">
+          <div class="menu-category-header"><h3 data-lang-key="cat_cocktails">Cocktails Japonais</h3></div>
+          <div class="menu-items">
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Shinya Negroni<small>深夜ネグローニ</small></div>
+                <div class="menu-item-price">$21</div>
+              </div>
+              <p data-lang-key="cocktail1">Whisky japonais Nikka, Campari aux herbes, vermouth rouge, fumée de cèdre, zeste d'orange séché.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Neige de Yuzu<small>柚子の雪</small></div>
+                <div class="menu-item-price">$19</div>
+              </div>
+              <p data-lang-key="cocktail2">Gin artisanal québécois, liqueur de yuzu, eau de fleur de sureau, neige de saké, bulles de cidre de glace.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Érable & Shiso<small>メープルと紫蘇</small></div>
+                <div class="menu-item-price">$18</div>
+              </div>
+              <p data-lang-key="cocktail3">Whisky canadien vieilli, sirop d'érable noir, shiso muddlé, bitters japonais, pierre de glace unique.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Brume Laurentienne<small>ローレンシャンの霧</small></div>
+                <div class="menu-item-price">$22</div>
+              </div>
+              <p data-lang-key="cocktail4">Vodka de blé, saké pétillant, concombre de serre, tonic à l'algue kombu, brume de pin blanc.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-category fade-in">
+          <div class="menu-category-header"><h3 data-lang-key="cat_vins">Vins Naturels</h3></div>
+          <div class="menu-items">
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Pét-Nat Riesling — Alsace<small>アルザス・リースリング</small></div>
+                <div class="menu-item-price">$19 / verre</div>
+              </div>
+              <p data-lang-key="vin1">Pétillant naturel, légèrement trouble. Acidité vive, parfum de poire et de pierre mouillée.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Orange Wine · Georgie<small>オレンジワイン</small></div>
+                <div class="menu-item-price">$22 / verre</div>
+              </div>
+              <p data-lang-key="vin2">Rkatsiteli sur peaux, tanins légers, notes de thé oolong et d'abricot confit. Accord parfait avec le sushi.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Pinot Noir · Bourgogne<small>ブルゴーニュ・ピノノワール</small></div>
+                <div class="menu-item-price">$26 / verre</div>
+              </div>
+              <p data-lang-key="vin3">Élevage minimaliste. Cerise de montagne, sous-bois humide, finale soyeuse. Rare dans un bar à sushi.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-category fade-in">
+          <div class="menu-category-header"><h3 data-lang-key="cat_sansalcool">Sans Alcool</h3></div>
+          <div class="menu-items">
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Kombucha Shiso-Gingembre<small>紫蘇ジンジャーコンブチャ</small></div>
+                <div class="menu-item-price">$12</div>
+              </div>
+              <p data-lang-key="na1">Fermenté maison, pétillant naturel, notes végétales et épicées. Vif, profond, sans alcool.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Eau de Saison<small>季節のお水</small></div>
+                <div class="menu-item-price">$9</div>
+              </div>
+              <p data-lang-key="na2">Eau filtrée des Laurentides, infusée au concombre, pin blanc et citron japonais. Pure et apaisante.</p>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Thé Glacé Matcha Cerise<small>抹茶さくらアイスティー</small></div>
+                <div class="menu-item-price">$11</div>
+              </div>
+              <p data-lang-key="na3">Matcha de cérémonie Uji, fleur de cerisier séchée, miel d'abeille sauvage québécoise, servi sur glace.</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="menu-note" data-lang-key="menu_note2">Carte des vins complète disponible sur demande · Accords mets-sakés sur demande au bar</p>
+      </div><!-- /boissons -->
+
+    </div>
+  </section>
+
+  <!-- ───────────────────── CHEFS ───────────────────── -->
+  <section id="chefs">
+    <div class="section" style="padding-bottom:0; padding-left:0; padding-right:0;">
+      <div class="section-inner section-header center fade-in" style="padding: 0 clamp(1.5rem,6vw,6rem) 3.5rem;">
+        <p class="label" data-lang-key="chefs_label">Nos Maîtres</p>
+        <div class="divider"></div>
+        <h2 data-lang-key="chefs_title">Les artisans de la nuit</h2>
+      </div>
+    </div>
+
+    <div class="chefs-grid">
+      <!-- Chef 1 -->
+      <div class="chef-card fade-in">
+        <div class="chef-visual">
+          <div class="chef-avatar">KY</div>
+          <p class="chef-num">01</p>
+        </div>
+        <div class="chef-info">
+          <p class="chef-title-label" data-lang-key="chef1_role">Chef Exécutif · Maître Sushi</p>
+          <h3 data-lang-key="chef1_name">Kenji Yamamoto</h3>
+          <p data-lang-key="chef1_bio">Né à Osaka et formé pendant dix ans au comptoir d'un maître de Tsukiji, Kenji a posé ses couteaux à Saint-Sauveur après un passage remarqué dans les cuisines de Montréal. C'est lui qui forge l'identité de SHINYA — une cuisine où le silence japonais dialogue avec la générosité québécoise. Son riz, dit-on, a une âme. Ses couteaux, forgés à la main au Japon, ne dorment jamais.</p>
+        </div>
+      </div>
+
+      <!-- Chef 2 -->
+      <div class="chef-card fade-in fade-in-delay-1">
+        <div class="chef-visual">
+          <div class="chef-avatar">ML</div>
+          <p class="chef-num">02</p>
+        </div>
+        <div class="chef-info">
+          <p class="chef-title-label" data-lang-key="chef2_role">Maître Sushi · Omakase</p>
+          <h3 data-lang-key="chef2_name">Mizuki Lavoie</h3>
+          <p data-lang-key="chef2_bio">Fille d'un père japonais et d'une mère originaire de Charlevoix, Mizuki incarne le cœur même de SHINYA. Formée à Kyoto, elle revient au Québec avec une obsession pour les textures et les contrastes. C'est elle qui conçoit les menus Omakase — seize instants de poésie comestible. Elle cueille elle-même herbes et fleurs sauvages dans les forêts environnantes chaque matin avant le service.</p>
+        </div>
+      </div>
+
+      <!-- Chef 3 -->
+      <div class="chef-card fade-in fade-in-delay-2">
+        <div class="chef-visual">
+          <div class="chef-avatar">HT</div>
+          <p class="chef-num">03</p>
+        </div>
+        <div class="chef-info">
+          <p class="chef-title-label" data-lang-key="chef3_role">Chef Barman · Directeur des Boissons</p>
+          <h3 data-lang-key="chef3_name">Hiroshi Tremblay</h3>
+          <p data-lang-key="chef3_bio">Hiroshi est un conteur qui parle avec du liquide. Né à Sapporo, élevé à Québec, il a perfectionné son art dans les bars clandestins de Tokyo avant de rentrer au pays. Il compose chaque cocktail comme un haïku — trois notes, une émotion, rien de superflu. Sa carte des sakés est l'une des plus pointues du Canada, sélectionnée lors de voyages annuels dans les kura artisanales du Japon.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────── HISTOIRE ───────────────────── -->
+  <section id="histoire" class="section">
+    <div class="histoire-inner">
+      <div class="histoire-text fade-in">
+        <span class="label" data-lang-key="histoire_label">Notre Histoire</span>
+        <div class="divider divider-left"></div>
+        <h2 data-lang-key="histoire_title">Là où Tokyo rencontre les Laurentides</h2>
+
+        <div class="histoire-quote">
+          <p data-lang-key="histoire_quote">"Chaque plat est une méditation."</p>
+          <span data-lang-key="histoire_quote_attr">— Kenji Yamamoto, Chef Fondateur</span>
+        </div>
+
+        <p data-lang-key="histoire_p1">SHINYA est née d'une vision simple et audacieuse : transplanter l'intimité des comptoirs de sushi de fin de nuit à Tokyo — ces lieux intimes où le chef et le convive se retrouvent dans un silence complice — au cœur des forêts de la vallée laurentienne.</p>
+        <p data-lang-key="histoire_p2">Fondée en 2019 par Kenji Yamamoto, la maison a délibérément choisi Saint-Sauveur pour sa dualité : la montagne enneigée et les eaux pures, la communauté artistique et les voyageurs de passage. Ce terroir québécois n'est pas un décor — il est un ingrédient.</p>
+        <p data-lang-key="histoire_p3">Nous travaillons avec des producteurs locaux : champignons sauvages des Laurentides, herbes cueillies à la main, miel d'abeilles nordiques, et même un saké brassé spécialement pour nous avec l'eau de notre région. Le Japon donne la technique. Le Québec donne l'âme.</p>
+      </div>
+
+      <div class="histoire-visual fade-in fade-in-delay-2">
+        <div class="histoire-deco"></div>
+        <div class="histoire-kanji-display">深<br>夜</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────── RESERVATION ───────────────────── -->
+  <section id="reservation" class="section">
+    <div class="reservation-inner">
+      <div class="reservation-left fade-in">
+        <p class="label" data-lang-key="resa_label">Réservation</p>
+        <div class="divider divider-left"></div>
+        <h2 data-lang-key="resa_title">Réserver votre soirée</h2>
+        <p data-lang-key="resa_intro">Chaque table chez SHINYA est une invitation à ralentir. Que vous veniez pour un repas en tête-à-tête ou pour l'expérience Omakase complète au comptoir, notre équipe vous accueille comme ses hôtes.</p>
+
+        <div class="reservation-detail">
+          <div class="reservation-detail-icon">◷</div>
+          <div class="reservation-detail-text">
+            <strong data-lang-key="resa_hours_label">Heures d'ouverture</strong>
+            <span data-lang-key="resa_hours">Mardi – Dimanche · 17h00 – 23h00</span>
+          </div>
+        </div>
+        <div class="reservation-detail">
+          <div class="reservation-detail-icon">✦</div>
+          <div class="reservation-detail-text">
+            <strong data-lang-key="resa_omakase_label">Omakase</strong>
+            <span data-lang-key="resa_omakase_note">Réservation 48h à l'avance · 8 places au comptoir</span>
+          </div>
+        </div>
+        <div class="reservation-detail">
+          <div class="reservation-detail-icon">✉</div>
+          <div class="reservation-detail-text">
+            <strong data-lang-key="resa_confirm_label">Confirmation</strong>
+            <span data-lang-key="resa_confirm_note">Notre équipe confirme sous 24 heures</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-in fade-in-delay-1">
+        <div class="res-form">
+          <div class="form-row">
+            <div class="form-field">
+              <label data-lang-key="field_prenom">Prénom</label>
+              <input type="text" />
+            </div>
+            <div class="form-field">
+              <label data-lang-key="field_nom">Nom</label>
+              <input type="text" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label data-lang-key="field_email">Courriel</label>
+              <input type="email" />
+            </div>
+            <div class="form-field">
+              <label data-lang-key="field_tel">Téléphone</label>
+              <input type="tel" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label data-lang-key="field_date">Date</label>
+              <input type="date" />
+            </div>
+            <div class="form-field">
+              <label data-lang-key="field_heure">Heure</label>
+              <select>
+                <option value="">—</option>
+                <option>17:00</option><option>17:30</option>
+                <option>18:00</option><option>18:30</option>
+                <option>19:00</option><option>19:30</option>
+                <option>20:00</option><option>20:30</option>
+                <option>21:00</option><option>21:30</option>
+                <option>22:00</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label data-lang-key="field_couverts">Nombre de personnes</label>
+              <select>
+                <option value="">—</option>
+                <option>1</option><option>2</option><option>3</option>
+                <option>4</option><option>5</option><option>6</option>
+                <option data-lang-key="field_group">7+ (groupe)</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label data-lang-key="field_experience">Expérience</label>
+              <select>
+                <option value="" data-lang-key="exp_regular">Table Régulière</option>
+                <option data-lang-key="exp_counter">Comptoir Sushi</option>
+                <option data-lang-key="exp_omakase">Expérience Omakase</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row full">
+            <div class="form-field">
+              <label data-lang-key="field_notes">Notes spéciales · allergies · célébrations</label>
+              <textarea></textarea>
+            </div>
+          </div>
+          <div class="form-submit-row">
+            <button type="submit" data-lang-key="resa_submit">Confirmer la réservation</button>
+          </div>
+        </div>
+        <p class="form-note" data-lang-key="form_note">Votre réservation sera confirmée par notre équipe dans les 24 heures suivant votre demande.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────── LOCATION ───────────────────── -->
+  <section id="location" class="section">
+    <div class="location-inner">
+      <div class="location-info fade-in">
+        <p class="label" data-lang-key="loc_label">Nous Trouver</p>
+        <div class="divider divider-left"></div>
+        <h2 data-lang-key="loc_title">Saint-Sauveur, Québec</h2>
+
+        <div class="location-block">
+          <span class="label" data-lang-key="loc_address_label">Adresse</span>
+          <p>147, rue Principale<br>Saint-Sauveur, Québec J0R 1R0<br>Canada</p>
+        </div>
+
+        <div class="location-block">
+          <span class="label" data-lang-key="loc_hours_label">Heures d'ouverture</span>
+          <div class="location-hours">
+            <div class="location-hour-row"><span data-lang-key="day_lun">Lundi</span><span data-lang-key="closed">Fermé</span></div>
+            <div class="location-hour-row"><span data-lang-key="day_mar">Mardi – Jeudi</span><span>17h – 23h</span></div>
+            <div class="location-hour-row"><span data-lang-key="day_ven">Vendredi – Samedi</span><span>17h – 00h</span></div>
+            <div class="location-hour-row"><span data-lang-key="day_dim">Dimanche</span><span>17h – 22h</span></div>
+          </div>
+        </div>
+
+        <div class="location-block">
+          <span class="label" data-lang-key="loc_contact_label">Contact</span>
+          <p><a href="tel:+14501234567">+1 (450) 123-4567</a><br><a href="mailto:bonsoir@shinyasushi.ca">bonsoir@shinyasushi.ca</a></p>
+        </div>
+
+        <div class="location-block">
+          <span class="label" data-lang-key="loc_tourist_label">Pour les visiteurs</span>
+          <p data-lang-key="loc_tourist_text">SHINYA est situé au cœur du village de Saint-Sauveur, à 5 minutes à pied des pentes de ski et des boutiques de la rue Principale. Accessible depuis Montréal en moins d'une heure. Stationnement gratuit à proximité.</p>
+        </div>
+
+        <div class="location-social">
+          <a href="#" class="social-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            Instagram
+          </a>
+          <a href="#" class="social-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="location-map fade-in fade-in-delay-1">
+        <div class="map-placeholder"></div>
+        <div class="map-pin">
+          <div class="map-pin-dot"></div>
+          <div class="map-pin-label">SHINYA · Saint-Sauveur</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────── CONTACT ───────────────────── -->
+  <section id="contact" class="section" style="background:var(--surface); border-top:1px solid var(--border);">
+    <div class="contact-inner fade-in">
+      <p class="label" data-lang-key="contact_label">Contact</p>
+      <div class="divider"></div>
+      <h2 data-lang-key="contact_title">Événements privés & partenariats</h2>
+      <p data-lang-key="contact_intro">Pour les événements privés, les réservations de groupes, les demandes presse ou les partenariats, notre équipe se fera un plaisir de vous répondre personnellement.</p>
+      <p style="font-size:0.82rem; color:var(--gold); margin-bottom:2.5rem; font-style:italic;" data-lang-key="contact_buyout">Rachat exclusif de la salle disponible · Menus personnalisés sur demande</p>
+
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-field">
+            <label data-lang-key="field_name">Nom complet</label>
+            <input type="text" />
+          </div>
+          <div class="form-field">
+            <label data-lang-key="field_email2">Courriel</label>
+            <input type="email" />
+          </div>
+        </div>
+        <div class="form-row full" style="margin-bottom:1px;">
+          <div class="form-field">
+            <label data-lang-key="field_message">Votre message</label>
+            <textarea style="height:130px;"></textarea>
+          </div>
+        </div>
+        <div class="form-submit-row">
+          <button type="submit" data-lang-key="contact_submit">Envoyer le message</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────── FOOTER ───────────────────── -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-logo">
+        <span class="logo-main">SHINYA</span>
+        <span class="logo-kanji">深夜</span>
+        <span class="footer-tagline" data-lang-key="footer_tagline">L'art du sushi. La nuit vous appartient.</span>
+      </div>
+
+      <nav class="footer-nav">
+        <a href="#menu" data-lang-key="nav_menu">La Carte</a>
+        <a href="#chefs" data-lang-key="nav_chefs">Nos Maîtres</a>
+        <a href="#histoire" data-lang-key="nav_histoire">Notre Histoire</a>
+        <a href="#reservation" data-lang-key="nav_resa">Réservation</a>
+        <a href="#location" data-lang-key="nav_location">Nous Trouver</a>
+        <a href="#contact" data-lang-key="nav_contact">Contact</a>
+      </nav>
+
+      <div class="footer-right">
+        <p style="color:var(--cream); font-size:0.85rem;">147, rue Principale<br>Saint-Sauveur, Québec</p>
+        <p><a href="tel:+14501234567" style="color:var(--gold); text-decoration:none; font-size:0.82rem;">+1 (450) 123-4567</a></p>
+        <div class="footer-lang">
+          <button onclick="setLang('fr')" class="footer-lang-btn active" id="footer-fr">FR</button>
+          <span style="color:var(--border)">|</span>
+          <button onclick="setLang('en')" class="footer-lang-btn" id="footer-en">EN</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p style="color:var(--border);">SHINYA · Saint-Sauveur, Québec · <span data-lang-key="footer_rights">Tous droits réservés</span> © 2025</p>
+    </div>
+  </footer>
+
+  <script>
+    // ═══════════════════════════════════════════
+    // BILINGUAL CONTENT
+    // ═══════════════════════════════════════════
+    const content = {
+      fr: {
+        nav_menu: "La Carte",
+        nav_chefs: "Nos Maîtres",
+        nav_histoire: "Notre Histoire",
+        nav_resa: "Réservation",
+        nav_location: "Nous Trouver",
+        nav_contact: "Contact",
+        nav_cta: "Réserver",
+        hero_eyebrow: "Saint-Sauveur · Québec · Depuis 2019",
+        hero_title_1: "L'art du sushi.",
+        hero_title_2: "La nuit vous appartient.",
+        hero_sub: "Une expérience gastronomique où la précision japonaise rencontre l'âme sauvage des Laurentides.",
+        hero_cta: "Réserver une table",
+        hero_scroll: "Découvrir",
+        exp1_label: "Le Sushi",
+        exp1_title: "L'art du geste",
+        exp1_text: "Chaque nigiri est façonné à la main par nos maîtres. Le riz, assaisonné au vinaigre de riz artisanal du Québec, porte la mémoire d'un geste mille fois répété. Le poisson, sélectionné à l'aube, n'est jamais pressé — il se pose.",
+        exp2_label: "Le Bar",
+        exp2_title: "L'ivresse douce",
+        exp2_text: "Notre bar à sakés rassemble plus de quarante cuvées, des junmai daiginjo de Niigata aux nihonshu produits dans les collines québécoises. Les cocktails japonais — fumés, floraux, glacés — racontent chaque saison dans un verre.",
+        exp3_label: "L'Ambiance",
+        exp3_title: "La nuit laurentienne",
+        exp3_text: "Derrière les grandes fenêtres, les pins enneigés veillent. À l'intérieur, la lumière des bougies effleure le bois sombre et la pierre. SHINYA n'est pas un restaurant — c'est le silence habité, juste avant minuit.",
+        menu_label: "La Carte",
+        menu_title: "Ce que la nuit vous offre",
+        tab_cuisine: "Cuisine",
+        tab_boissons: "Boissons",
+        cat_entrees: "Entrées",
+        cat_nigiris: "Nigiris",
+        cat_makis: "Makis Signatures",
+        cat_omakase: "Omakase",
+        omakase_price: "Sur demande",
+        omakase_desc: "Une expérience en seize services conçue chaque soir par le Chef Kenji Yamamoto. Les ingrédients varient selon les arrivages et la saison. Vous vous abandonnez — le chef crée. Réservation requise au moins 48h à l'avance. Places limitées à huit convives au comptoir sushi.",
+        menu_note: "Notre menu évolue selon les saisons et les arrivages · Prix en dollars canadiens, taxes en sus",
+        cat_sake: "Sakés",
+        cat_cocktails: "Cocktails Japonais",
+        cat_vins: "Vins Naturels",
+        cat_sansalcool: "Sans Alcool",
+        menu_note2: "Carte des vins complète disponible sur demande · Accords mets-sakés sur demande au bar",
+        chefs_label: "Nos Maîtres",
+        chefs_title: "Les artisans de la nuit",
+        chef1_role: "Chef Exécutif · Maître Sushi",
+        chef1_name: "Kenji Yamamoto",
+        chef1_bio: "Né à Osaka et formé pendant dix ans au comptoir d'un maître de Tsukiji, Kenji a posé ses couteaux à Saint-Sauveur après un passage remarqué dans les cuisines de Montréal. C'est lui qui forge l'identité de SHINYA — une cuisine où le silence japonais dialogue avec la générosité québécoise. Son riz, dit-on, a une âme. Ses couteaux, forgés à la main au Japon, ne dorment jamais.",
+        chef2_role: "Maître Sushi · Omakase",
+        chef2_name: "Mizuki Lavoie",
+        chef2_bio: "Fille d'un père japonais et d'une mère originaire de Charlevoix, Mizuki incarne le cœur même de SHINYA. Formée à Kyoto, elle revient au Québec avec une obsession pour les textures et les contrastes. C'est elle qui conçoit les menus Omakase — seize instants de poésie comestible. Elle cueille elle-même herbes et fleurs sauvages dans les forêts environnantes chaque matin avant le service.",
+        chef3_role: "Chef Barman · Directeur des Boissons",
+        chef3_name: "Hiroshi Tremblay",
+        chef3_bio: "Hiroshi est un conteur qui parle avec du liquide. Né à Sapporo, élevé à Québec, il a perfectionné son art dans les bars clandestins de Tokyo avant de rentrer au pays. Il compose chaque cocktail comme un haïku — trois notes, une émotion, rien de superflu. Sa carte des sakés est l'une des plus pointues du Canada, sélectionnée lors de voyages annuels dans les kura artisanales du Japon.",
+        histoire_label: "Notre Histoire",
+        histoire_title: "Là où Tokyo rencontre les Laurentides",
+        histoire_quote: "\"Chaque plat est une méditation.\"",
+        histoire_quote_attr: "— Kenji Yamamoto, Chef Fondateur",
+        histoire_p1: "SHINYA est née d'une vision simple et audacieuse : transplanter l'intimité des comptoirs de sushi de fin de nuit à Tokyo — ces lieux intimes où le chef et le convive se retrouvent dans un silence complice — au cœur des forêts de la vallée laurentienne.",
+        histoire_p2: "Fondée en 2019 par Kenji Yamamoto, la maison a délibérément choisi Saint-Sauveur pour sa dualité : la montagne enneigée et les eaux pures, la communauté artistique et les voyageurs de passage. Ce terroir québécois n'est pas un décor — il est un ingrédient.",
+        histoire_p3: "Nous travaillons avec des producteurs locaux : champignons sauvages des Laurentides, herbes cueillies à la main, miel d'abeilles nordiques, et même un saké brassé spécialement pour nous avec l'eau de notre région. Le Japon donne la technique. Le Québec donne l'âme.",
+        resa_label: "Réservation",
+        resa_title: "Réserver votre soirée",
+        resa_intro: "Chaque table chez SHINYA est une invitation à ralentir. Que vous veniez pour un repas en tête-à-tête ou pour l'expérience Omakase complète au comptoir, notre équipe vous accueille comme ses hôtes.",
+        resa_hours_label: "Heures d'ouverture",
+        resa_hours: "Mardi – Dimanche · 17h00 – 23h00",
+        resa_omakase_label: "Omakase",
+        resa_omakase_note: "Réservation 48h à l'avance · 8 places au comptoir",
+        resa_confirm_label: "Confirmation",
+        resa_confirm_note: "Notre équipe confirme sous 24 heures",
+        field_prenom: "Prénom",
+        field_nom: "Nom",
+        field_email: "Courriel",
+        field_tel: "Téléphone",
+        field_date: "Date",
+        field_heure: "Heure",
+        field_couverts: "Nombre de personnes",
+        field_group: "7+ (groupe)",
+        field_experience: "Expérience",
+        exp_regular: "Table Régulière",
+        exp_counter: "Comptoir Sushi",
+        exp_omakase: "Expérience Omakase",
+        field_notes: "Notes spéciales · allergies · célébrations",
+        resa_submit: "Confirmer la réservation",
+        form_note: "Votre réservation sera confirmée par notre équipe dans les 24 heures suivant votre demande.",
+        loc_label: "Nous Trouver",
+        loc_title: "Saint-Sauveur, Québec",
+        loc_address_label: "Adresse",
+        loc_hours_label: "Heures d'ouverture",
+        loc_contact_label: "Contact",
+        loc_tourist_label: "Pour les visiteurs",
+        loc_tourist_text: "SHINYA est situé au cœur du village de Saint-Sauveur, à 5 minutes à pied des pentes de ski et des boutiques de la rue Principale. Accessible depuis Montréal en moins d'une heure. Stationnement gratuit à proximité.",
+        day_lun: "Lundi",
+        day_mar: "Mardi – Jeudi",
+        day_ven: "Vendredi – Samedi",
+        day_dim: "Dimanche",
+        closed: "Fermé",
+        contact_label: "Contact",
+        contact_title: "Événements privés & partenariats",
+        contact_intro: "Pour les événements privés, les réservations de groupes, les demandes presse ou les partenariats, notre équipe se fera un plaisir de vous répondre personnellement.",
+        contact_buyout: "Rachat exclusif de la salle disponible · Menus personnalisés sur demande",
+        field_name: "Nom complet",
+        field_email2: "Courriel",
+        field_message: "Votre message",
+        contact_submit: "Envoyer le message",
+        footer_tagline: "L'art du sushi. La nuit vous appartient.",
+        footer_rights: "Tous droits réservés",
+        item_tataki: "Thon rouge snacké à la flamme, ponzu aux agrumes du jardin, gingembre frais et huile de sésame grillé.",
+        item_edamame: "Edamame de saison, beurre de truffe noire du Périgord, fleur de sel des Îles de la Madeleine.",
+        item_huitres: "Quatre huîtres des Îles, granité de yuzu, caviar de hareng des Laurentides et foam de saké Junmai.",
+        item_gyoza: "Gyoza panpoêlés au canard sauvage des Laurentides, sauce miso blanc et herbes du terroir québécois.",
+        item_chawan: "Flan vapeur japonais au dashi de homard de Gaspésie, champignons matsutake et ciboulette sauvage.",
+        item_otoro: "Ventrèche de thon et bœuf Wagyu A5 légèrement brûlés, finition truffe et or en feuille.",
+        item_saumon: "Saumon sauvage du Pacifique, laque à l'érable pur du Québec, grain de poivre Sichuan.",
+        item_uni: "Uni de Santa Barbara posé sur riz chaud, nori grillé, ciboulette et quelques grains de fleur de sel.",
+        item_fletan: "Flétan de l'Atlantique mariné au kombu, yuzu kosho maison, fines herbes des sous-bois laurentiens.",
+        item_ikura: "Œufs de saumon marinés au shoyu artisanal, ponzu au citron de Menton, gel de shiso frais.",
+        item_laurentien: "Canard fumé, fromage de chèvre des Laurentides, betterave lacto-fermentée, sauce hoisin au sirop d'érable. 8 pièces.",
+        item_noir: "Homard braisé, avocat, caviar d'esturgeon, nori noir activé, sauce truffe. 8 pièces.",
+        item_special: "Thon rouge, mangue des Antilles, jalapeño, coriandre, sauce épicée yuzu mayo. 8 pièces.",
+        item_vegetal: "Champignons shiitake grillés, concombre anglais, avocat, radis daikon, vinaigrette sésame noir. 8 pièces.",
+        sake1: "Niigata, Japon. Notes de melon frais, pêche blanche et fleur de cerisier. Doux, long, impeccable.",
+        sake2: "Brassé au Québec avec l'eau des Laurentides. Terroiré, légèrement umami, finale minérale distinctive.",
+        sake3: "Exceptionnel. Yamada Nishiki poli à 33%. Opulent, cristallin. Réservé aux grandes occasions.",
+        sake4: "Non filtré, crémeux, légèrement pétillant. Selon la saison — changeant comme la lumière à Saint-Sauveur.",
+        cocktail1: "Whisky japonais Nikka, Campari aux herbes, vermouth rouge, fumée de cèdre, zeste d'orange séché.",
+        cocktail2: "Gin artisanal québécois, liqueur de yuzu, eau de fleur de sureau, neige de saké, bulles de cidre de glace.",
+        cocktail3: "Whisky canadien vieilli, sirop d'érable noir, shiso muddlé, bitters japonais, pierre de glace unique.",
+        cocktail4: "Vodka de blé, saké pétillant, concombre de serre, tonic à l'algue kombu, brume de pin blanc.",
+        vin1: "Pétillant naturel, légèrement trouble. Acidité vive, parfum de poire et de pierre mouillée.",
+        vin2: "Rkatsiteli sur peaux, tanins légers, notes de thé oolong et d'abricot confit. Accord parfait avec le sushi.",
+        vin3: "Élevage minimaliste. Cerise de montagne, sous-bois humide, finale soyeuse. Rare dans un bar à sushi.",
+        na1: "Fermenté maison, pétillant naturel, notes végétales et épicées. Vif, profond, sans alcool.",
+        na2: "Eau filtrée des Laurentides, infusée au concombre, pin blanc et citron japonais. Pure et apaisante.",
+        na3: "Matcha de cérémonie Uji, fleur de cerisier séchée, miel d'abeille sauvage québécoise, servi sur glace.",
+      },
+      en: {
+        nav_menu: "The Menu",
+        nav_chefs: "Our Masters",
+        nav_histoire: "Our Story",
+        nav_resa: "Reserve",
+        nav_location: "Find Us",
+        nav_contact: "Contact",
+        nav_cta: "Reserve",
+        hero_eyebrow: "Saint-Sauveur · Québec · Since 2019",
+        hero_title_1: "The art of sushi.",
+        hero_title_2: "The night is yours.",
+        hero_sub: "A gastronomic experience where Japanese precision meets the wild soul of the Laurentians.",
+        hero_cta: "Reserve a Table",
+        hero_scroll: "Discover",
+        exp1_label: "The Sushi",
+        exp1_title: "The art of the gesture",
+        exp1_text: "Every nigiri is shaped by hand by our masters. The rice, seasoned with artisanal Quebec rice vinegar, carries the memory of a gesture repeated a thousand times. The fish, selected at dawn, is never rushed — it simply lands.",
+        exp2_label: "The Bar",
+        exp2_title: "The gentle intoxication",
+        exp2_text: "Our sake bar brings together over forty labels, from Niigata junmai daiginjo to nihonshu crafted in the Quebec hills. Japanese cocktails — smoky, floral, glacial — tell each season in a single glass.",
+        exp3_label: "The Atmosphere",
+        exp3_title: "The Laurentian night",
+        exp3_text: "Beyond the tall windows, snow-covered pines keep watch. Inside, candlelight grazes dark wood and stone. SHINYA is not a restaurant — it is inhabited silence, just before midnight.",
+        menu_label: "The Menu",
+        menu_title: "What the night offers",
+        tab_cuisine: "Cuisine",
+        tab_boissons: "Drinks",
+        cat_entrees: "Starters",
+        cat_nigiris: "Nigiris",
+        cat_makis: "Signature Rolls",
+        cat_omakase: "Omakase",
+        omakase_price: "Price on request",
+        omakase_desc: "A sixteen-course experience crafted each evening by Chef Kenji Yamamoto. Ingredients vary with availability and season. You surrender — the chef creates. Reservation required at least 48 hours in advance. Limited to eight guests at the sushi counter.",
+        menu_note: "Our menu evolves with the seasons and daily arrivals · Prices in Canadian dollars, taxes extra",
+        cat_sake: "Sakés",
+        cat_cocktails: "Japanese Cocktails",
+        cat_vins: "Natural Wines",
+        cat_sansalcool: "Non-Alcoholic",
+        menu_note2: "Full wine list available on request · Sake-food pairings available at the bar",
+        chefs_label: "Our Masters",
+        chefs_title: "The artisans of the night",
+        chef1_role: "Executive Chef · Sushi Master",
+        chef1_name: "Kenji Yamamoto",
+        chef1_bio: "Born in Osaka and trained for ten years at a Tsukiji master's counter, Kenji brought his knives to Saint-Sauveur after a celebrated stint in Montreal's kitchens. He forges the identity of SHINYA — a cuisine where Japanese silence speaks with Québécois generosity. His rice, they say, has a soul. His hand-forged Japanese knives never rest.",
+        chef2_role: "Sushi Master · Omakase",
+        chef2_name: "Mizuki Lavoie",
+        chef2_bio: "Daughter of a Japanese father and a mother from Charlevoix, Mizuki embodies the very heart of SHINYA. Trained in Kyoto, she returned to Quebec with an obsession for texture and contrast. She designs the Omakase menus — sixteen moments of edible poetry. Each morning before service, she hand-forages wild herbs and flowers from the surrounding forests.",
+        chef3_role: "Head Bartender · Beverage Director",
+        chef3_name: "Hiroshi Tremblay",
+        chef3_bio: "Hiroshi is a storyteller who speaks in liquid. Born in Sapporo, raised in Quebec City, he honed his craft in Tokyo's underground bars before returning home. He composes each cocktail like a haiku — three notes, one emotion, nothing superfluous. His sake list is among the most curated in Canada, assembled through annual visits to artisanal kura across Japan.",
+        histoire_label: "Our Story",
+        histoire_title: "Where Tokyo meets the Laurentians",
+        histoire_quote: "\"Every dish is a meditation.\"",
+        histoire_quote_attr: "— Kenji Yamamoto, Founding Chef",
+        histoire_p1: "SHINYA was born from a simple and audacious vision: to transplant the intimacy of Tokyo's late-night sushi counters — those quiet places where chef and guest meet in wordless understanding — into the heart of the Laurentian valley forests.",
+        histoire_p2: "Founded in 2019 by Kenji Yamamoto, the restaurant deliberately chose Saint-Sauveur for its duality: snow-capped mountains and pure waters, an artistic community and passing travellers. This Québécois terroir is not a backdrop — it is an ingredient.",
+        histoire_p3: "We work with local producers: wild Laurentian mushrooms, hand-foraged herbs, nordic honey bees, and even a sake brewed specially for us using the waters of our region. Japan provides the technique. Quebec provides the soul.",
+        resa_label: "Reservation",
+        resa_title: "Reserve your evening",
+        resa_intro: "Every table at SHINYA is an invitation to slow down. Whether you come for an intimate dinner or the full Omakase experience at the counter, our team welcomes you as personal guests.",
+        resa_hours_label: "Hours",
+        resa_hours: "Tuesday – Sunday · 5:00 PM – 11:00 PM",
+        resa_omakase_label: "Omakase",
+        resa_omakase_note: "48h advance reservation required · 8 counter seats",
+        resa_confirm_label: "Confirmation",
+        resa_confirm_note: "Our team confirms within 24 hours",
+        field_prenom: "First Name",
+        field_nom: "Last Name",
+        field_email: "Email",
+        field_tel: "Phone",
+        field_date: "Date",
+        field_heure: "Time",
+        field_couverts: "Number of guests",
+        field_group: "7+ (group)",
+        field_experience: "Experience",
+        exp_regular: "Regular Table",
+        exp_counter: "Sushi Counter",
+        exp_omakase: "Omakase Experience",
+        field_notes: "Special notes · allergies · celebrations",
+        resa_submit: "Confirm Reservation",
+        form_note: "Your reservation will be confirmed by our team within 24 hours of your request.",
+        loc_label: "Find Us",
+        loc_title: "Saint-Sauveur, Québec",
+        loc_address_label: "Address",
+        loc_hours_label: "Hours",
+        loc_contact_label: "Contact",
+        loc_tourist_label: "For visitors",
+        loc_tourist_text: "SHINYA is located in the heart of Saint-Sauveur village, a 5-minute walk from the ski slopes and boutiques on rue Principale. Accessible from Montreal in under an hour. Free parking nearby.",
+        day_lun: "Monday",
+        day_mar: "Tuesday – Thursday",
+        day_ven: "Friday – Saturday",
+        day_dim: "Sunday",
+        closed: "Closed",
+        contact_label: "Contact",
+        contact_title: "Private Events & Partnerships",
+        contact_intro: "For private events, group bookings, press inquiries or partnerships, our team will be delighted to respond to you personally.",
+        contact_buyout: "Exclusive venue buyout available · Custom menus on request",
+        field_name: "Full Name",
+        field_email2: "Email",
+        field_message: "Your message",
+        contact_submit: "Send Message",
+        footer_tagline: "The art of sushi. The night is yours.",
+        footer_rights: "All rights reserved",
+        item_tataki: "Flame-seared bluefin tuna, garden citrus ponzu, fresh ginger and toasted sesame oil.",
+        item_edamame: "Seasonal edamame, Périgord black truffle butter, Îles de la Madeleine fleur de sel.",
+        item_huitres: "Four island oysters, yuzu granita, Laurentian herring caviar and Junmai sake foam.",
+        item_gyoza: "Pan-seared wild Laurentian duck gyoza, white miso sauce and Quebec terroir herbs.",
+        item_chawan: "Japanese steam custard with Gaspésie lobster dashi, matsutake mushrooms and wild chives.",
+        item_otoro: "Lightly seared fatty tuna and A5 Wagyu beef, truffle finish and gold leaf.",
+        item_saumon: "Wild Pacific salmon, pure Quebec maple glaze, Sichuan peppercorn.",
+        item_uni: "Santa Barbara uni on warm rice, grilled nori, chives and a few grains of fleur de sel.",
+        item_fletan: "Atlantic halibut marinated in kombu, house yuzu kosho, Laurentian woodland herbs.",
+        item_ikura: "Artisanal shoyu-cured salmon roe, Menton lemon ponzu, fresh shiso gel.",
+        item_laurentien: "Smoked duck, Laurentian chèvre, lacto-fermented beets, maple-hoisin sauce. 8 pieces.",
+        item_noir: "Braised lobster, avocado, sturgeon caviar, activated black nori, truffle sauce. 8 pieces.",
+        item_special: "Bluefin tuna, Antillean mango, jalapeño, cilantro, spicy yuzu mayo. 8 pieces.",
+        item_vegetal: "Grilled shiitake, English cucumber, avocado, daikon radish, black sesame vinaigrette. 8 pieces.",
+        sake1: "Niigata, Japan. Notes of fresh melon, white peach and cherry blossom. Soft, long, impeccable.",
+        sake2: "Brewed in Quebec with Laurentian water. Terroir-driven, slightly umami, distinctive mineral finish.",
+        sake3: "Exceptional. Yamada Nishiki polished to 33%. Opulent, crystalline. Reserved for grand occasions.",
+        sake4: "Unfiltered, creamy, lightly effervescent. Seasonal — ever-changing like the light at Saint-Sauveur.",
+        cocktail1: "Nikka Japanese whisky, herbal Campari, red vermouth, cedar smoke, dried orange zest.",
+        cocktail2: "Quebec craft gin, yuzu liqueur, elderflower water, sake snow, ice cider bubbles.",
+        cocktail3: "Aged Canadian whisky, dark maple syrup, muddled shiso, Japanese bitters, single ice stone.",
+        cocktail4: "Wheat vodka, sparkling sake, greenhouse cucumber, kombu tonic, white pine mist.",
+        vin1: "Natural sparkling, slightly cloudy. Bright acidity, scents of pear and wet stone.",
+        vin2: "Rkatsiteli on skins, light tannins, oolong tea and candied apricot notes. Perfect with sushi.",
+        vin3: "Minimalist élevage. Mountain cherry, damp forest floor, silky finish. Rare in a sushi bar.",
+        na1: "House-fermented, naturally sparkling, vegetal and spiced notes. Vivid, deep, non-alcoholic.",
+        na2: "Filtered Laurentian water infused with cucumber, white pine and Japanese citrus. Pure and soothing.",
+        na3: "Uji ceremonial matcha, dried cherry blossom, Quebec wild honey, served over ice.",
+      }
+    };
+
+    let currentLang = 'fr';
+
+    function setLang(lang) {
+      currentLang = lang;
+      const c = content[lang];
+
+      // Update all data-lang-key elements
+      document.querySelectorAll('[data-lang-key]').forEach(el => {
+        const key = el.getAttribute('data-lang-key');
+        if (c[key] !== undefined) el.textContent = c[key];
+      });
+
+      // Update html lang attribute
+      document.documentElement.lang = lang;
+
+      // Update all toggle buttons
+      document.querySelectorAll('.lang-btn, .mobile-lang-btn, .footer-lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.id.includes(lang) || btn.getAttribute('onclick') === `setLang('${lang}')`);
+      });
+
+      // Sync toggle active states explicitly
+      ['nav','mobile','footer'].forEach(prefix => {
+        const frBtn = document.getElementById(`${prefix}-fr`);
+        const enBtn = document.getElementById(`${prefix}-en`);
+        if (frBtn) frBtn.classList.toggle('active', lang === 'fr');
+        if (enBtn) enBtn.classList.toggle('active', lang === 'en');
+      });
+    }
+
+    // ═══════════════════════════════════════════
+    // NAVBAR SCROLL
+    // ═══════════════════════════════════════════
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // ═══════════════════════════════════════════
+    // ACTIVE NAV SECTION
+    // ═══════════════════════════════════════════
+    const sections = document.querySelectorAll('section[id]');
+    const navAnchors = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+      });
+      navAnchors.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+
+    // ═══════════════════════════════════════════
+    // HAMBURGER
+    // ═══════════════════════════════════════════
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    document.querySelectorAll('.mobile-nav-link').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    // ═══════════════════════════════════════════
+    // MENU TABS
+    // ═══════════════════════════════════════════
+    function switchTab(tab) {
+      document.querySelectorAll('.menu-tab').forEach((t, i) => {
+        t.classList.toggle('active', (i === 0 && tab === 'cuisine') || (i === 1 && tab === 'boissons'));
+      });
+      document.getElementById('panel-cuisine').classList.toggle('active', tab === 'cuisine');
+      document.getElementById('panel-boissons').classList.toggle('active', tab === 'boissons');
+    }
+
+    // ═══════════════════════════════════════════
+    // FADE-IN ON SCROLL
+    // ═══════════════════════════════════════════
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
